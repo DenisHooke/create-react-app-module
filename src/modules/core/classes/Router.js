@@ -1,6 +1,8 @@
-/* eslint no-param-reassign: 0 */
 import _ from 'lodash';
 
+/**
+ * Class which is helping to build router list throughout of the all app.
+ */
 export default class Router {
   _routes = {};
 
@@ -8,36 +10,59 @@ export default class Router {
     this._routes = routes;
   }
 
+  /**
+   * Getting
+   * @returns {{}}
+   */
   get routes() {
     return this._routes;
   }
 
+  /**
+   * Set one router object
+   * @param value
+   */
   set routes(value) {
     this._routes = value;
   }
 
+  /**
+   * Returning route by key. Optional is supporting change router params to dynamic values.
+   * @param key
+   * @param params
+   * @returns {boolean}
+   */
   getPath(key, params = {}) {
-    return this._routes[key] ? this.replaceParams(this._routes[key].pattern, params) : false;
+    return this._routes[key]
+      ? this.replaceParams(this._routes[key].pattern, params)
+      : false;
   }
 
-  getList() {
+  /**
+   * Returning list of all routing list
+   * @returns {*}
+   */
+  getAll() {
     return _.sortBy(_.toArray(this._routes), [o => o.pattern === '*']);
   }
 
-  getAll() {
-    return this.getList();
-  }
-
-  replaceParams(pattern, params) {
-    if (_.isEmpty(params)) {
+  /**
+   * Internal method which helps to replace router params
+   * @param pattern
+   * @param params
+   * @returns {*}
+   * @private
+   */
+  _replaceParams(pattern, params) {
+    if (_(params).isEmpty()) {
       return pattern.replace(/\((.*)\)/, '');
     }
 
-    _.map(params, (param, key) => {
-      pattern = pattern.replace(`:${key}`, param);
+    _(params).each((param, key) => {
+      pattern.replace(`:${key}`, param);
     });
 
-    pattern = pattern.replace(/([\)\(])/g, ''); // eslint-disable-line
+    pattern = pattern.replace(/([)(])/g, '');
 
     return pattern;
   }

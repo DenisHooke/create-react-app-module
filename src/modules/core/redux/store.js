@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 const initStore = (reducers, middlewares = []) => {
-
   middlewares.push(thunk);
 
   // add the freeze dev middleware & redux logger
@@ -18,7 +17,10 @@ const initStore = (reducers, middlewares = []) => {
 
   // add the redux dev tools
   if (process.env.NODE_ENV !== 'production' && window.devToolsExtension) {
-    middleware = compose(middleware, window.devToolsExtension());
+    middleware = compose(
+      middleware,
+      window.devToolsExtension()
+    );
   }
 
   // create the store

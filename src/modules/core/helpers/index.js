@@ -1,8 +1,3 @@
-import { PlaceholderHOC, HookComponent, collector, resolver } from './dependencyResolver';
+import { PlaceholderHOC, HookComponent, collector, resolver } from './DR';
 
-export {
-    collector,
-    resolver,
-    PlaceholderHOC,
-    HookComponent,
-}
+export { collector, resolver, PlaceholderHOC, HookComponent };

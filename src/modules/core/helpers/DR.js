@@ -1,4 +1,4 @@
-/* eslint-disable  */
+import _ from 'lodash';
 import React from 'react';
 
 const subscribers = Symbol('subscribers');
@@ -7,6 +7,7 @@ class Subscriber {
   constructor() {
     this[subscribers] = {};
   }
+
   subscribe(key, order, handler = null) {
     const subscriberList = this[subscribers];
     if (!subscriberList[key]) {
@@ -20,10 +21,11 @@ class Subscriber {
 
     subscriberList[key][order] = handler;
   }
+
   unsubscribe(key, order = null) {
     const list = this[subscribers][key];
     if (!list) {
-      return;
+      return null;
     }
     order ? delete list[order] : delete this[subscribers][key];
   }
@@ -34,7 +36,9 @@ class Resolver extends Subscriber {
     if (!key) {
       throw new Error('Invalid property key provided!');
     }
+
     const subscriberList = this[subscribers];
+
     if (!subscriberList[key]) {
       return data;
     }
