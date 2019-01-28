@@ -15,16 +15,6 @@ function App() {
   _this.modules = {};
 
   /**
-   * Method initialized all app routings and union reducer
-   */
-  _this.init = () => {
-    const routers = _this.registerRoutes(_this.getModules());
-
-    _this.router = new Router(routers);
-    _this.reducer = new Reducer(_this.getModules());
-  };
-
-  /**
    * Returning reducer
    * @returns {Reducer}
    */
@@ -80,6 +70,16 @@ function App() {
 
   return {
     /**
+     * Method initialized all app routings and union reducer
+     */
+    init(config = {}) {
+      const routers = _this.registerRoutes(_this.getModules());
+
+      _this.router = new Router(routers);
+      _this.reducer = new Reducer(_this.getModules());
+    },
+
+    /**
      * Return router list
      * @returns {Router}
      */
@@ -102,7 +102,6 @@ function App() {
      */
     registerModules(modules) {
       modules.map(_this.setModule);
-      _this.init();
     },
 
     /**

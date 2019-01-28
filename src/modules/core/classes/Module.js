@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 /**
- * Special class which must have to wrapped all modules in the app.
+ * The special class wrapper which must be used each module in the app.
  */
 export default class Module {
   _name = null;
