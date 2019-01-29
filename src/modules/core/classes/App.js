@@ -13,6 +13,7 @@ function App() {
   _this.router = new Router();
   _this.reducer = new Reducer();
   _this.modules = {};
+  _this.middlewares = [];
 
   /**
    * Returning reducer
@@ -20,6 +21,10 @@ function App() {
    */
   _this.getReducer = () => {
     return _this.reducer;
+  };
+
+  _this.getMiddlewares = () => {
+    return _this.middlewares;
   };
 
   /**
@@ -105,6 +110,14 @@ function App() {
     },
 
     /**
+     * For extending application we can register additional middlewares
+     * @param middlewares
+     */
+    registerMiddlewares(middlewares) {
+      _this.middlewares = middlewares;
+    },
+
+    /**
      * Method which is built initial React app
      * In the app has already included
      * - Redux
@@ -113,7 +126,12 @@ function App() {
      */
     render() {
       return (
-        <Provider store={initStore(initReducers(_this.getReducer().getAll()))}>
+        <Provider
+          store={initStore(
+            initReducers(_this.getReducer().getAll()),
+            _this.getMiddelwares()
+          )}
+        >
           <BrowserRouter>
             <Switch>
               {this.getRouter()

@@ -3,6 +3,11 @@ import { App } from './modules/core';
 import Awesome from './modules/awesome';
 
 /**
+ * For extending an application we can register additional middlewares
+ */
+App.registerMiddlewares([]);
+
+/**
  * Building the app using modules. It's like bricks which are used for building a house.
  */
 App.registerModules([new Awesome()]);
