@@ -129,7 +129,7 @@ function App() {
         <Provider
           store={initStore(
             initReducers(_this.getReducer().getAll()),
-            _this.getMiddelwares()
+            _this.getMiddlewares()
           )}
         >
           <BrowserRouter>

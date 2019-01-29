@@ -27,8 +27,7 @@ docker build -t create-react-app-module .
 For development mode just run docker image:
 
 ```bash
-docker run -p 80:3000/tcp create-react-app-module
-
+docker container run -it -p 3000:3000 -p 35729:35729 -v $(pwd):/app create-react-app-module
 ``` 
 
 ## Folder structure
