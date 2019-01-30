@@ -7,6 +7,7 @@
 - [Running](#running)
 - [Folder Structure](#folder-structure)
 - [Module Structure](#module-structure)
+- [Communication between modules](#module-communications)
 - [Create a new module](#new-module)
 
 ## Introduction
@@ -32,7 +33,7 @@ docker container run -it -p 3000:3000 -p 35729:35729 -v $(pwd):/app create-react
 
 ## Folder structure
 
-After creation, your project should look like this:
+After creation, your project should looks like this:
 
 ```
 my-app/
@@ -61,8 +62,8 @@ The main difference between Create React App and the boilerplate that the `/src`
 
 > Tooltip: For easier creation a new module you may use special script [cram-builder](https://github.com/facebook/create-react-app). Already included as dependency of the boilerplate.
 
-Your app should build using module architecture principals when your features divide to independence module as much as possible. But if your
-logic is assumed communications between module or one module is depended by other you may use some feature which are described in special section.
+Your app should build using module architecture principals when your features are divided to independence modules as much as possible. But if your
+logic is assumed communications between modules or one module is depended by other, you may use some feature which are described in special section of README.md file.
 
  Fullest module has next structure:
  ```
