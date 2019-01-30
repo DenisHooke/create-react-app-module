@@ -1,8 +1,8 @@
 import reducer from './reducer';
 import routes from './routes';
 import moduleConfig from './config';
-import './template';
 import { Module } from '../core/index';
+import './template';
 
 const module = globalConfig =>
   new Module('Amesome', {

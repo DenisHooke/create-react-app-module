@@ -16,6 +16,7 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
+    "cram-builder": "^0.9.7",
     "flow-bin": "^0.82.0",
     "husky": "^1.1.2",
     "lint-staged": "^7.3.0",

@@ -1,4 +1,4 @@
-# Create-react-app-module
+# Create React App Module
 
 
 ## Table of Contents
@@ -11,7 +11,7 @@
 
 ## Introduction
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and supported all cors and features which exist in Create React App.
-There's one difference that current project has another folder structure based on module architecture.
+There's one difference that the current project has another folder structure based on module architecture. 
 
 ## Installation
 
@@ -43,33 +43,114 @@ my-app/
     index.html
     favicon.ico
   src/
-    App.css
-    App.js
-    App.test.js
-    index.css
     index.js
-    logo.svg
+    serviceWorker.js
+    /modules
+      /awesome <- demo module
+      ...
+      /core
+        /classes
+        /helpers
+        /redux
+        index.js
 ```
+The main difference between Create React App and the boilerplate that the `/src` folder contains `modules` dir with `core` module which manages the app. 
 
-For the project to build, **these files must exist with exact filenames**:
-
-- `public/index.html` is the page template;
-- `src/index.js` is the JavaScript entry point.
-
-You can delete or rename the other files.
-
-You may create subdirectories inside `src`. For faster rebuilds, only files inside `src` are processed by Webpack.<br>
-You need to **put any JS and CSS files inside `src`**, otherwise Webpack won’t see them.
-
-Only files inside `public` can be used from `public/index.html`.<br>
-Read instructions below for using assets from JavaScript and HTML.
-
-You can, however, create more top-level directories.<br>
-They will not be included in the production build so you can use them for things like documentation.
 
 ## Module structure
 
-Module structure description
+> Tooltip: For easier creation a new module you may use special script [cram-builder](https://github.com/facebook/create-react-app). Already included as dependency of the boilerplate.
+
+Your app should build using module architecture principals when your features divide to independence module as much as possible. But if your
+logic is assumed communications between module or one module is depended by other you may use some feature which are described in special section.
+
+ Fullest module has next structure:
+ ```
+ awesome-module/
+   /actions
+   /components
+     /elements
+     /pages
+       /HelloWorld
+         HelloWorld.js
+         index.js
+         style.scss
+     /forms
+     /popups
+   /reducer
+     index.js
+   config.js
+   routes.js
+   template.js
+   index.js
+ ```
+ 
+ **/actions** - folder contains all redux actions which may be used by the module.
+ 
+ **/components** - folder with React components. We highly recommend to use sub-dirs for components. (e.g. popups, elements, pages)
+ 
+ **/reducer** - in bound of module architecture principle assuming that reducer will be only one. It means that in reducer folder there'll be only one `index.js` file.
+ 
+ **config.js** - object with default settings/options of the module which could be using in any place of the module. These config may be overriding by the application which would be using this module.
+ For safe getting the setting value use command:
+ 
+ ```js
+App.getModule().getConfig().get('APP_VERSION');
+```
+**routes.js** - file with a list of routing navigation that are implemented in this module.
+
+Example:
+```js
+import Category from './components/pages/Category';
+import Dashboard from './components/pages/Dashboard';
+ 
+export default {
+  category: {
+    path: '/',
+    exact: true,
+    component: Category
+  },
+  dashboard: {
+    path: '/dashboard',
+    component: Dashboard
+  }
+};
+```
+
+> Note: All routing's mast have unique keys, otherwise the app returned an error.
+
+ For safe getting the route you can use command:
+ 
+ ```js
+ App.getRouter().getPath('dashboard'); // return: '/dashboard'
+```
+
+**templates.js** - file uses for communication between modules. More details you could find in additioan section of README.md file.
+
+
+**index.js** - the main file of the module which contains initialization process of the module. Simpliest module can contain only name of the module, all 
+other settings are not required.
+
+Example:
+
+```js
+import reducer from './reducer';
+import routes from './routes';
+import moduleConfig from './config';
+import { Module } from '../core/index';
+import './template';
+ 
+const module = globalConfig =>
+  new Module('Amesome', {
+    routes,
+    reducer,
+    config: { ...moduleConfig, ...globalConfig },
+    actions: {}
+  });
+ 
+export default module;
+
+```
 
 ## Proxying API Requests in Development
 
